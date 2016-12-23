@@ -2,8 +2,8 @@ name: chicagoTransitAuthorityBusesDemo2
 account: marceljmerchatshinypubs
 server: shinyapps.io
 appId: 147153
-bundleId: 659563
+bundleId: 659761
 url: https://marceljmerchatshinypubs.shinyapps.io/chicagoTransitAuthorityBusesDemo2/
-when: 1482513336.34987
+when: 1482533072.58272
 asMultiple: FALSE
 asStatic: FALSE

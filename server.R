@@ -27,7 +27,7 @@ library(curl) # make the jsonlite suggested dependency explicit
 #   returned.
     
 # key = "" # ID obtained from Chicago Transit Authority
-
+    
 getBusData <- function(info,info_detail,bus_routes,key) {
     url <- paste("http://www.ctabustracker.com/bustime/api/v2/",info,
                  "?key=",key,"&",info_detail,"=",bus_routes,
@@ -65,7 +65,6 @@ function(input, output, session) {
 
   # Route select input box
     output$routeSelect <- renderUI({
-  # live_vehicles <- getBusData() #"VehicleLocations/0" - Minneapolis App only
     routeNums <- c(22,49,56,63,65,66,72,90,92,151)
   # Add names, so that we can add all=0
     names(routeNums) <- routeNums
@@ -83,8 +82,6 @@ function(input, output, session) {
     #   Invalidate this reactive after the interval has passed, so that data is
     #   fetched again.
         invalidateLater(interval * 1000, session)
-
-    #   getMetroData("VehicleLocations/0") - Minneapolis App Command only
         bus_data <- getBusData("getvehicles","rt",
                         bus_routes="22,49,56,63,65,66,72,90,92,151",key)[[1]][[1]]  
         bus_data[,"lat"] <- as.numeric(bus_data[,"lat"]) # Latitude 
