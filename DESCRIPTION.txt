@@ -1,0 +1,8 @@
+Version: 1.0
+Type: Shiny
+Title: Bus dashboard for Chicago similar to Shiny Example-086 for Minneapolis. The only significant contribution here is adaptation for the API for Chicago.
+Author: Marcel Merchat
+AuthorUrl: https://github.com/marcelMerchat/
+License: 
+Tags:
+DisplayMode: Normal
