@@ -10,11 +10,6 @@ library(curl) # make the jsonlite suggested dependency explicit
 #   1=South, 2=East, 3=West, 4=North
     dirColors <-c("1"="#595490", "2"="#527525", "3"="#A93F35", "4"="#BA48AA")
 
-#   Download data from the Chicago Transit Authority API
-
-#   bus api
-#   http://www.transitchicago.com/developers/bustracker.aspx
-
 #   Load static trip and shape data
     trips  <- readRDS("metrotransit-data/rds/trips.rds")
     shapes <- readRDS("metrotransit-data/rds/shapes.rds")
@@ -26,13 +21,16 @@ library(curl) # make the jsonlite suggested dependency explicit
 #   (3) bus_routes: We enter "22,49,56,63,65,66,72,90,92,151" for ten popular
 #                   bus routes because the shiny drop-down selector may be 
 #                   limited to no more than 10 choices.
+#   (4) key: An ID obtained from the Chicago Transit Authority
 
 #   A data frame for all buses on the list of the bus_routes parameter is
 #   returned.
+    
+# key = "" # ID obtained from Chicago Transit Authority
 
-getBusData <- function(info,info_detail,bus_routes) {
+getBusData <- function(info,info_detail,bus_routes,key) {
     url <- paste("http://www.ctabustracker.com/bustime/api/v2/",info,
-                 "?key=6tLVMsLSPvMuDBuueDccUc4KR&",info_detail,"=",bus_routes,
+                 "?key=",key,"&",info_detail,"=",bus_routes,
                  "&format=json",sep="") 
     jsonlite::fromJSON(url)
 }
@@ -88,7 +86,7 @@ function(input, output, session) {
 
     #   getMetroData("VehicleLocations/0") - Minneapolis App Command only
         bus_data <- getBusData("getvehicles","rt",
-                        bus_routes="22,49,56,63,65,66,72,90,92,151")[[1]][[1]]  
+                        bus_routes="22,49,56,63,65,66,72,90,92,151",key)[[1]][[1]]  
         bus_data[,"lat"] <- as.numeric(bus_data[,"lat"]) # Latitude 
         bus_data[,"lon"] <- as.numeric(bus_data[,"lon"]) # Longitude 
         bus_data[,"hdg"] <- as.numeric(bus_data[,"hdg"]) # Bus direction,heading

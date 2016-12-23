@@ -59,6 +59,20 @@ body <- dashboardBody(
         p(class = "text-muted",
           br(),
           "Source data updates every 30 seconds."
+        ),
+        p(class = "text-muted",
+          br(),
+          paste("A route number can have several different trips, each",
+                "with a different path. Only the most commonly-used path will",
+                "be displayed on the map." )
+          ),
+        p(class = "text-muted",
+          br(),
+          paste("This website is adapted from the Shiny-086 example for",
+                "Minneapolis in order to accommodate the API for the Chicago",
+                "Transit Authority",
+                "Marcel Merchat, Phone: 773-852-1689",
+                "https://github.com/marcelMerchat/chicagoTransitAuthorityBusesDemo2")
         )
       )
     )

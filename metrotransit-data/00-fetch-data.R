@@ -1,17 +1,13 @@
 # Information about data source at:
-# No longer available: http://datafinder.org/metadata/transit_schedule_google_feed.html
-                       
+
 # Data reference:
 # https://developers.google.com/transit/gtfs/reference?csw=1
 
-# current info:
-# https://gisdata.mn.gov/dataset/us-mn-state-metc-trans-transit-schedule-google-fd
+# Information
+# http://www.transitchicago.com/developers/bustracker.aspx
 
-# raw data:
-# ftp://ftp.gisdata.mn.gov/../../pub/gdrs/data/pub/com_mvta/
-
-# Download metadata (information only including web address for raw data download)
-# download.file("ftp://ftp.gisdata.mn.gov/../../pub/gdrs/data/pub/com_mvta/trans_transit_schedule_google_fd.zip","google_transitmetadata.zip")
+# http://www.transitchicago.com/assets/1/developer_center/
+# cta_Bus_Tracker_API_Developer_Guide_and_Documentation_20160929.pdf
 
 urlcta1 <- "http://www.transitchicago.com/downloads/sch_data/google_transit.zip"
 # Download the ZIP file you see listed. Only one package is posted at any given
@@ -20,8 +16,7 @@ urlcta1 <- "http://www.transitchicago.com/downloads/sch_data/google_transit.zip"
 # the Trips table are effective.
 
 download.file(urlcta1,"google_transit.zip")
-#download.file("http://www.transitchicago.com/downloads/sch_data/google_transit.zip","google_transit.zip")
-                 
+
 #unzip("google_transit.zip", exdir = "raw") 
 unlink("google_transit.zip")
 
