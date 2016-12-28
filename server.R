@@ -26,7 +26,7 @@ library(curl) # make the jsonlite suggested dependency explicit
 #   A data frame for all buses on the list of the bus_routes parameter is
 #   returned.
     
-# key = "" # ID obtained from Chicago Transit Authority
+key = " " # ID obtained from Chicago Transit Authority
     
 getBusData <- function(info,info_detail,bus_routes,key) {
     url <- paste("http://www.ctabustracker.com/bustime/api/v2/",info,
@@ -70,15 +70,15 @@ function(input, output, session) {
     names(routeNums) <- routeNums
     routeNums <- c(All = 0, routeNums)
     selectInput("routeNum", "Bus Route", choices = routeNums,
-                                        selected = routeNums[6])
+                                        selected = routeNums[2])
   })
 
 #   Locations of all active vehicles
     vehicleLocations <- reactive({
         input$refresh # Refresh if button clicked
 
-    #   Get interval (minimum 30)
-        interval <- max(as.numeric(input$interval), 30)
+    #   Get interval (minimum 60)
+        interval <- max(as.numeric(input$interval), 60)
     #   Invalidate this reactive after the interval has passed, so that data is
     #   fetched again.
         invalidateLater(interval * 1000, session)
@@ -86,21 +86,22 @@ function(input, output, session) {
                         bus_routes="22,49,56,63,65,66,72,90,92,151",key)[[1]][[1]]  
         bus_data[,"lat"] <- as.numeric(bus_data[,"lat"]) # Latitude 
         bus_data[,"lon"] <- as.numeric(bus_data[,"lon"]) # Longitude 
-        bus_data[,"hdg"] <- as.numeric(bus_data[,"hdg"]) # Bus direction,heading
+        bus_data[,"hdg"] <- as.numeric(bus_data[,"hdg"]) # Bus direction, heading
         
     #   "North", Direction-4
-        bus_data[,"Direction"] <- "4" 
+        bus_data[,"Direction"] <- 4 
     #   "East", Direction-2        
-        bus_data[bus_data$hdg > 60 & bus_data$hdg < 120, "Direction"] <- "2"
+        bus_data[bus_data$hdg > 60 & bus_data$hdg < 120, "Direction"] <- 2
     #   "South", Direction-1
-        bus_data[bus_data$hdg >= 120 & bus_data$hdg <= 240, "Direction"] <- "1"
+        bus_data[bus_data$hdg >= 120 & bus_data$hdg <= 240, "Direction"] <- 1
     #   "West", Direction-3
-        bus_data[bus_data$hdg > 240 & bus_data$hdg < 300, "Direction"] <- "3"
+        bus_data[bus_data$hdg > 240 & bus_data$hdg < 300, "Direction"] <- 3
         bus_data
   })
 
 #   Locations of vehicles for a particular route
     routeVehicleLocations <- reactive({
+    
     if (is.null(input$routeNum))
       return()
 
@@ -189,11 +190,12 @@ function(input, output, session) {
 
     output$busmap <- renderLeaflet({
         locations <- routeVehicleLocations()
-    #   if (length(locations) == 0)
-    #       return(NULL)
+        locs <- class(locations)
+       if (locs != "data.frame")
+           return(NULL)
 
 #   Show only selected directions
-    locations <- filter(locations, Direction %in% as.numeric(input$directions))
+    locations <- filter(locations, Direction %in% as.numeric(input$Directions))
 
 #   Four possible directions for bus routes
     dirPal <- colorFactor(dirColors, names(dirColors))

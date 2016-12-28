@@ -2,7 +2,7 @@ library(shinydashboard)
 library(leaflet)
 
 header <- dashboardHeader(
-  title = "Chicago Bus Transit"
+  title = "Live Bus Service: Chicago Transit Authority", titleWidth=600
 )
 
 body <- dashboardBody(
@@ -23,7 +23,7 @@ body <- dashboardBody(
         actionButton("zoomButton", "Zoom to fit buses"),
         tags$br(),
         tags$br(),
-        checkboxGroupInput("directions", "Show",
+        checkboxGroupInput("Directions", "Show",
           choices = c(
             Northbound = 4,
             Southbound = 1,
@@ -35,13 +35,12 @@ body <- dashboardBody(
         tags$br(),
         selectInput("interval", "Refresh interval",
           choices = c(
-            "30 seconds" = 30,
             "1 minute" = 60,
             "2 minutes" = 120,
             "5 minutes" = 300,
             "10 minutes" = 600
           ),
-          selected = "60"
+          selected = 60
         ),
         uiOutput("timeSinceLastUpdate"),
         p(class = "text-muted",
@@ -53,7 +52,7 @@ body <- dashboardBody(
             br(),
             paste("This website is adapted from the Shiny-086 example for",
             "Minneapolis in order to accommodate the API for the Chicago",
-            "Transit Authority")
+            "Transit Authority.")
         ),
         p(class = "text-muted",
           br(),
